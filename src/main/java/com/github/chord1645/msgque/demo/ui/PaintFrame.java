@@ -124,28 +124,32 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
         大小B = new Label("画笔大小", Label.CENTER);
         大小E = new Label("橡皮大小", Label.CENTER);
 // 面板添加组件
+        //TODO 按钮
+        TextField room = new TextField("房间号");
+        Button join = new Button("加入");
+        join.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                client.join(room.getText());
+                join.setVisible(false);
+            }
+        });
+        toolPanel.add(room);
+        toolPanel.add(join);
         toolPanel.add(openPic);
         toolPanel.add(savePic);
-
-
         toolPanel.add(pen);
         toolPanel.add(drLine);
         toolPanel.add(drCircle);
         toolPanel.add(drRect);
-
-
         toolPanel.add(颜色);
         toolPanel.add(ColChoice);
         toolPanel.add(大小B);
         toolPanel.add(SizeChoice);
         toolPanel.add(colchooser);
-
-
         toolPanel.add(eraser);
         toolPanel.add(大小E);
         toolPanel.add(EraserChoice);
-
-
         toolPanel.add(clear);
 // 工具面板到APPLET面板
         paper1 = new PaintPanel(paintInfo);//TODO
@@ -337,7 +341,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
     public void mouseDragged(MouseEvent e) {
-        client.append(new Apoint(e.getX() - 500, e.getY()-70, toolFlag));
+        client.append(new Apoint(e.getX() - 500, e.getY() - 70, toolFlag));
 //        System.out.println("mouseDragged");
         Point1 p1;
         switch (toolFlag) {
@@ -372,8 +376,6 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 //        System.out.println("update");
         paint(g);
     }
-
-
 
 
     public void mousePressed(MouseEvent e) {

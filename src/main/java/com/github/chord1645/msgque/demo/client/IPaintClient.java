@@ -9,4 +9,6 @@ public interface IPaintClient {
     void flushCache()   ;
 
     void append(Apoint apoint);
+
+    void join(String text);
 }

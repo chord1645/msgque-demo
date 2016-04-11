@@ -89,4 +89,9 @@ public class PaintClient implements IPaintClient {
 
         list.add(apoint);
     }
+
+    @Override
+    public void join(String text) {
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.github.chord1645.msgque.demo.client;
 
+import com.github.chord1645.msgque.demo.Topics;
 import com.github.chord1645.msgque.demo.model.PaintData;
 import com.github.chord1645.msgque.demo.ui.Apoint;
 import com.github.chord1645.msgque.demo.ui.PaintFrame;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +45,7 @@ public class PaintMqttClient implements IPaintClient {
 
     List<Apoint> list = new ArrayList<>();
     MessagePack messagePack = new MessagePack();
-    int qos = 1;
+    int qos = 2;
 
     @Override
     public void clearCache() {
@@ -69,6 +71,19 @@ public class PaintMqttClient implements IPaintClient {
     @Override
     public void append(Apoint apoint) {
         list.add(apoint);
+    }
+
+    @Override
+    public void join(String room) {
+        try {
+            MqttMessage mqttMessage = new MqttMessage(room.getBytes("utf-8"));
+            mqttMessage.setQos(qos);
+            iclient.publish(Topics.S_JOIN, mqttMessage);
+        } catch (MqttException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     class TestCallback implements MqttCallback {
