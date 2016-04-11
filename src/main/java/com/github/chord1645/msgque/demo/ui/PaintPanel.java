@@ -43,7 +43,7 @@ public class PaintPanel extends Panel {
 
     PaintPanel(Vector paintInfo) {
         this.paintInfo = new Vector();
-        setBounds(0, 50, 900, 450);
+        setBounds(0, 60, 500, 280);
         setBackground(Color.LIGHT_GRAY);
         setVisible(true);
         validate();

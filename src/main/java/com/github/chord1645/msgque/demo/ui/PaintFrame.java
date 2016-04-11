@@ -153,7 +153,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
         add(toolPanel, BorderLayout.PAGE_START);
 
 
-        setBounds(230, 50, 1800, 500);
+        setBounds(230, 50, 1000, 350);
         setVisible(true);
         validate();
 // dialog for save and load
@@ -337,7 +337,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
     public void mouseDragged(MouseEvent e) {
-        client.append(new Apoint(e.getX() - 900, e.getY(), toolFlag));
+        client.append(new Apoint(e.getX() - 500, e.getY()-70, toolFlag));
 //        System.out.println("mouseDragged");
         Point1 p1;
         switch (toolFlag) {
