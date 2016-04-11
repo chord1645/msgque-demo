@@ -13,29 +13,40 @@
         <logback-ext-spring.version>0.1.1</logback-ext-spring.version>
         <commons-webcompent.version>1.0</commons-webcompent.version>
         <servlet.version>3.1.0</servlet.version>
-        <thymeleaf.version>2.1.3.RELEASE</thymeleaf.version>
-        <fastjson.version>1.2.7</fastjson.version>
-        <osp.version>1.0</osp.version>
-        <yandi.version>1.1</yandi.version>
-        <nuwa.version>1.1</nuwa.version>
-        <uc.version>0.1.2</uc.version>
-        <tcp4j.version>1.0.2</tcp4j.version>
         <commons-utils.version>1.7</commons-utils.version>
         <jodd.version>3.6.7</jodd.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
-        <n8n.version>1.0</n8n.version>
-        <bluebird.version>1.4</bluebird.version>
         <aspectj.version>1.7.4</aspectj.version>
+        <msgpack.version>0.6.12</msgpack.version>
+        <javassist.version>3.20.0-GA</javassist.version>
     </properties>
 
     <dependencies>
         <dependency>
+            <groupId>org.msgpack</groupId>
+            <artifactId>msgpack</artifactId>
+            <version>${msgpack.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.javassist</groupId>
+                    <artifactId>javassist</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.paho</groupId>
             <artifactId>org.eclipse.paho.client.mqttv3</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
-
         <dependency>
             <groupId>io.moquette</groupId>
             <artifactId>moquette-broker</artifactId>
@@ -85,157 +96,10 @@
             <artifactId>netty-all</artifactId>
             <version>4.1.0.CR6</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>2.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.3.0</version>
-        </dependency>
-        <!-- -->
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>5.1.3.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>${commons-fileupload.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cim120.uc</groupId>
-            <artifactId>uc-agent</artifactId>
-            <version>${uc.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.github.tonydeng</groupId>
-                    <artifactId>tcp4j</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jodd</groupId>
-            <artifactId>jodd-bean</artifactId>
-            <version>${jodd.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cim120.nuwa</groupId>
-            <artifactId>nuwa-agent</artifactId>
-            <version>${nuwa.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cim120.yandi</groupId>
-            <artifactId>yandi-agent</artifactId>
-            <version>${yandi.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tonydeng</groupId>
-            <artifactId>tcp4j</artifactId>
-            <version>${tcp4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>${thymeleaf.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring4</artifactId>
-            <version>${thymeleaf.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${servlet.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.cim120.commons</groupId>
-            <artifactId>commons-webcompent</artifactId>
-            <version>${commons-webcompent.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>com.cim120.commons</groupId>
-                    <artifactId>commons-utils</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>spring-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.alibaba</groupId>
-                    <artifactId>fastjson</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>com.cim120.commons</groupId>
-            <artifactId>commons-utils</artifactId>
-            <version>${commons-utils.version}</version>
-        </dependency>
         <dependency>
             <groupId>org.logback-extensions</groupId>
             <artifactId>logback-ext-spring</artifactId>
             <version>${logback-ext-spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-websocket</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.tonydeng</groupId>
-            <artifactId>osp</artifactId>
-            <version>${osp.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -244,21 +108,10 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.cim120.n8n</groupId>
-            <artifactId>n8n-agent</artifactId>
-            <version>${n8n.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.cim120.bluebird</groupId>
-            <artifactId>bluebird-agent</artifactId>
-            <version>${bluebird.version}</version>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
+            <version>${javassist.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>
