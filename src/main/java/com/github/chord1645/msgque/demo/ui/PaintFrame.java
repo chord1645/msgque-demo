@@ -45,13 +45,13 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
     // *工具面板--画笔，直线，圆，矩形，多边形,橡皮，清除*/
     Panel toolPanel;
     public PaintPanel paper1;
-    Button eraser, drLine, drCircle, drRect;
-    Button clear, pen;
+    JButton eraser, drLine, drCircle, drRect;
+    JButton clear, pen;
     Choice ColChoice, SizeChoice, EraserChoice;
-    Button colchooser;
-    Label 颜色, 大小B, 大小E;
+    JButton colchooser;
+    JLabel 颜色, 大小B, 大小E;
     // 保存功能
-    Button openPic, savePic;
+    JButton openPic, savePic;
     FileDialog openPicture, savePicture;
 
     IPaintClient client;
@@ -93,19 +93,19 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
         toolPanel = new Panel();
 
 
-        clear = new Button("清除");
-        eraser = new Button("橡皮");
-        pen = new Button("画笔");
-        drLine = new Button("画直线");
-        drCircle = new Button("画圆形");
-        drRect = new Button("画矩形");
+        clear = new JButton("清除");
+        eraser = new JButton("橡皮");
+        pen = new JButton("画笔");
+        drLine = new JButton("画直线");
+        drCircle = new JButton("画圆形");
+        drRect = new JButton("画矩形");
 
 
-        openPic = new Button("打开图画");
-        savePic = new Button("保存图画");
+        openPic = new JButton("打开图画");
+        savePic = new JButton("保存图画");
 
 
-        colchooser = new Button("显示调色板");
+        colchooser = new JButton("显示调色板");
 
 
 // 各组件事件监听
@@ -120,13 +120,13 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
         colchooser.addActionListener(this);
 
 
-        颜色 = new Label("画笔颜色", Label.CENTER);
-        大小B = new Label("画笔大小", Label.CENTER);
-        大小E = new Label("橡皮大小", Label.CENTER);
+        颜色 = new JLabel("画笔颜色", JLabel.CENTER);
+        大小B = new JLabel("画笔大小", JLabel.CENTER);
+        大小E = new JLabel("橡皮大小", JLabel.CENTER);
 // 面板添加组件
         //TODO 按钮
         TextField room = new TextField("房间号");
-        Button join = new Button("加入");
+        JButton join = new JButton("加入");
         join.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -157,7 +157,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
         add(toolPanel, BorderLayout.PAGE_START);
 
 
-        setBounds(230, 50, 1000, 350);
+        setBounds(230, 50, 1000, 650);
         setVisible(true);
         validate();
 // dialog for save and load
