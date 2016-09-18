@@ -12,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 public class PaintPanel extends Panel {
     int x = -1, y = -1;// 初始化鼠标位置
@@ -43,7 +44,7 @@ public class PaintPanel extends Panel {
 
     PaintPanel(Vector paintInfo) {
         this.paintInfo = new Vector();
-        setBounds(0, 80, 500, 550);
+        setBounds(200, 80, 500, 550);
         setBackground(Color.LIGHT_GRAY);
         setVisible(true);
         validate();
@@ -64,12 +65,8 @@ public class PaintPanel extends Panel {
             p2 = (Point1) paintInfo.elementAt(i + 1);
             size = new BasicStroke(p1.boarder, BasicStroke.CAP_BUTT,
                     BasicStroke.JOIN_BEVEL);
-
-
             g2d.setColor(p1.col);
             g2d.setStroke(size);
-
-
             if (p1.tool == p2.tool) {
                 switch (p1.tool) {
                     case 0:// 画笔
@@ -113,7 +110,13 @@ public class PaintPanel extends Panel {
                     default:
                 }// end switch
             }// end if
+            try {
+                TimeUnit.NANOSECONDS.sleep(1500);  //绘画延迟,模仿真实笔触
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }// end for
+        paintInfo.clear();
     }
 
     public void update(Graphics g) {

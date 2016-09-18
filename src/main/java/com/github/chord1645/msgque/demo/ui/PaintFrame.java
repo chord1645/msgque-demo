@@ -10,6 +10,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.io.*;
+import java.util.Collection;
 import java.util.List;
 import java.util.Vector;
 
@@ -45,6 +46,10 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
     // *工具面板--画笔，直线，圆，矩形，多边形,橡皮，清除*/
     Panel toolPanel;
     public PaintPanel paper1;
+    public PlayersPanel playersPanel;
+    TextField room = new TextField("房间号");
+    TextField player = new TextField("游客1");
+    JButton join;
     JButton eraser, drLine, drCircle, drRect;
     JButton clear, pen;
     Choice ColChoice, SizeChoice, EraserChoice;
@@ -55,10 +60,47 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
     FileDialog openPicture, savePicture;
 
     IPaintClient client;
+    public static Font defaultFont = new Font(Font.SANS_SERIF, Font.BOLD, 20);
+
+    private void makeFont() {
+        try {
+
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            String names[] = {"Label ", "CheckBox ", "PopupMenu ",
+                    "MenuItem ", "CheckBoxMenuItem ", "JRadioButtonMenuItem ",
+                    "ComboBox ", "Button ", "Tree ", "ScrollPane ", "TabbedPane ",
+                    "EditorPane ", "TitledBorder ", "Menu ", "TextArea ", "OptionPane ",
+                    "MenuBar ", "ToolBar ", "ToggleButton ", "ToolTip ", "ProgressBar ",
+                    "TableHeader ", "Panel ", "List ", "ColorChooser ", "PasswordField ",
+                    "TextField ", "Table ", "Label ", "Viewport ", "RadioButtonMenuItem ",
+
+                    "RadioButton ", "DesktopPane ", "InternalFrame "
+
+            };
+
+            for (int i = 0; i < names.length; i++) {
+
+                UIManager.put(names[i] + ".font ", defaultFont);
+
+            }
+
+            UIManager.put("OptionPane.messageFont ", defaultFont);
+
+            UIManager.put("OptionPane.buttonFont ", defaultFont);
+            UIManager.put("Label.foreground ", Color.black);
+
+            UIManager.put("Border.foreground ", Color.black);
+            UIManager.put("TitledBorder.titleColor ", Color.black);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public PaintFrame(String s, IPaintClient client) {
         super(s);
         this.client = client;
+        makeFont();
         addMouseMotionListener(this);
         addMouseListener(this);
 
@@ -107,8 +149,13 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
         colchooser = new JButton("显示调色板");
 
-
+        //TODO 按钮
+        room = new TextField("房间号");
+        player = new TextField("游客1");
+        room.setColumns(10);
+        join = new JButton("加入");
 // 各组件事件监听
+        join.addActionListener(this);
         clear.addActionListener(this);
         eraser.addActionListener(this);
         pen.addActionListener(this);
@@ -124,17 +171,15 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
         大小B = new JLabel("画笔大小", JLabel.CENTER);
         大小E = new JLabel("橡皮大小", JLabel.CENTER);
 // 面板添加组件
-        //TODO 按钮
-        TextField room = new TextField("房间号");
-        JButton join = new JButton("加入");
-        join.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                client.join(room.getText());
-                join.setVisible(false);
-            }
-        });
+
+//        join.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                boolean bool = client.join(room.getText(), player.getText());
+//            }
+//        });
         toolPanel.add(room);
+        toolPanel.add(player);
         toolPanel.add(join);
         toolPanel.add(openPic);
         toolPanel.add(savePic);
@@ -151,13 +196,12 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
         toolPanel.add(大小E);
         toolPanel.add(EraserChoice);
         toolPanel.add(clear);
-// 工具面板到APPLET面板
         paper1 = new PaintPanel(paintInfo);//TODO
+        playersPanel = new PlayersPanel();//TODO
         add(paper1, BorderLayout.PAGE_START);
+        add(playersPanel, BorderLayout.PAGE_START);
         add(toolPanel, BorderLayout.PAGE_START);
-
-
-        setBounds(230, 50, 1000, 650);
+        setBounds(230, 50, 1200, 650);
         setVisible(true);
         validate();
 // dialog for save and load
@@ -199,8 +243,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
         Point1 p1, p2;
-
-
+//        System.out.println(paintInfo.size());
         n = paintInfo.size();
 
 
@@ -263,6 +306,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
                 }// end switch
             }// end if
         }// end for
+
     }
 
 
@@ -341,7 +385,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
     public void mouseDragged(MouseEvent e) {
-        client.append(new Apoint(e.getX() - 500, e.getY() - 70, toolFlag));
+        client.append(new Apoint(e.getX() - 700, e.getY() - 70, toolFlag));
 //        System.out.println("mouseDragged");
         Point1 p1;
         switch (toolFlag) {
@@ -455,10 +499,9 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
                 paintInfo.addElement(cutflag);
                 repaint();
                 break;
-
-
             default:
         }
+        paintInfo.clear();
     }
 
 
@@ -476,21 +519,23 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
     public void actionPerformed(ActionEvent e) {
 //        System.out.println("actionPerformed");
-        if (e.getSource() == pen)// 画笔
-        {
+        if (e.getSource() == join) {
+            boolean bool = client.join(room.getText(), player.getText());
+        }
+        if (e.getSource() == pen) {
             System.out.println("pen");
             toolFlag = 0;
         }
 
 
-        if (e.getSource() == eraser)// 橡皮
-        {
+        if (e.getSource() == eraser){
             System.out.println("eraser");
             toolFlag = 1;
         }
 
 
         if (e.getSource() == clear)// 清除
+
         {
             System.out.println("clear");
             toolFlag = 2;
@@ -500,6 +545,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
         if (e.getSource() == drLine)// 画线
+
         {
             System.out.println("drLine");
             toolFlag = 3;
@@ -507,6 +553,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
         if (e.getSource() == drCircle)// 画圆
+
         {
             System.out.println("drCircle");
             toolFlag = 4;
@@ -514,6 +561,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
         if (e.getSource() == drRect)// 画矩形
+
         {
             System.out.println("drRect");
             toolFlag = 5;
@@ -521,6 +569,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
         if (e.getSource() == colchooser)// 调色板
+
         {
             System.out.println("colchooser");
             Color newColor = JColorChooser.showDialog(this, "我的调色板", c);
@@ -529,6 +578,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
         if (e.getSource() == openPic)// 打开图画
+
         {
 
 
@@ -570,6 +620,7 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
         if (e.getSource() == savePic)// 保存图画
+
         {
             savePicture.setVisible(true);
             try {
@@ -585,14 +636,23 @@ public class PaintFrame extends Frame implements ActionListener, MouseMotionList
 
 
         }
+
     }
 
+    /**
+     * 追加绘画笔迹
+     *
+     * @param data
+     */
     public void addData(List<Apoint> data) {
         data.forEach(apoint -> {
             Point1 p1 = new Point1(apoint.getX(), apoint.getY(), Color.black, apoint.getType(), con);
             paper1.paintInfo.addElement(p1);
         });
         paper1.repaint();
-//        paper1.repaint();
+    }
+
+    public void refleshRoom(Collection<String> players) {
+        playersPanel.reflesh(players);
     }
 }// end PaintFrame

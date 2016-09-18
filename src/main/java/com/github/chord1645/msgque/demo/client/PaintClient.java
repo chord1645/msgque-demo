@@ -91,7 +91,8 @@ public class PaintClient implements IPaintClient {
     }
 
     @Override
-    public void join(String text) {
-
+    public boolean join(String room, String player) {
+        return false;
     }
+
 }

@@ -10,5 +10,5 @@ public interface IPaintClient {
 
     void append(Apoint apoint);
 
-    void join(String text);
+    boolean join(String room,String player);
 }
